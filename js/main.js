@@ -2,6 +2,8 @@
 var output   = document.getElementsByClassName("output")[0];
 var equation = "";
 var number   = "";
+var id       = "";
+var type     = "";
 
 
 // button click:
@@ -9,42 +11,71 @@ var buttons = document.getElementsByClassName("btn");
 
 for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", function() {
-        var id = this.getAttribute("data-id");
-        var type = this.getAttribute("data-type");
+        id = this.getAttribute("data-id");
+        type = this.getAttribute("data-type");
 
         switch (type) {
             case "clear":
-                number = "";
-                equation = "";
-                output.innerHTML = 0;
+                Clear();
                 break;
 
             case "operator":
-                equation += id;
-                output.innerHTML = number + " " + id;
-                number = "";
+                Operator();
                 break;
 
             case "symbol":
-                number += id;
-                equation += id;
-                output.innerHTML = number;
+                Symbol();
                 break;
 
             case "equal":
-                number = eval(equation);
-                output.innerHTML = number;
-                number = "";
-                equation = "";
+                Equal();
                 break;
 
             default:
-                number += id;
-                equation += id;
-                output.innerHTML = number;
+                Default();
                 break;
         }
     }, false);
+}
+
+
+// clear:
+function Clear() {
+    number = "";
+    equation = "";
+    output.innerHTML = 0;
+}
+
+
+// operator:
+function Operator() {
+    equation += id;
+    output.innerHTML = number + " " + id;
+    number = "";
+}
+
+
+// symbol:
+function Symbol() {
+    number += id;
+    equation += id;
+    output.innerHTML = number;
+}
+
+
+// equal:
+function Equal() {
+    number = eval(equation);
+    equation = number;
+    output.innerHTML = number;
+}
+
+
+// default:
+function Default() {
+    number += id;
+    equation += id;
+    output.innerHTML = number;
 }
 
 
